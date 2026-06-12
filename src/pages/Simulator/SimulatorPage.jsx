@@ -2,6 +2,7 @@ import Header from '../../components/Header/Header'
 import ProjectPanel from '../../components/ProjectPanel/ProjectPanel'
 import Loads from '../../components/Loads/Loads'
 import Equipment from '../../components/Equipment/Equipment'
+import Scenarios from '../../components/Scenarios/Scenarios'
 import Executive from '../../components/Executive/Executive'
 import useSimulatorStore from '../../store/useSimulatorStore'
 
@@ -15,6 +16,7 @@ function SimulatorPage() {
         {currentStep === 1 && <ProjectPanel />}
         {currentStep === 2 && <Loads />}
         {currentStep === 3 && <Equipment />}
+        {currentStep === 4 && <Scenarios />}
         {currentStep === 5 && <Executive />}
       </main>
     </div>
