@@ -58,6 +58,10 @@ const useSimulatorStore = create((set, get) => ({
       product: selectedProduct,
       loads,
       results,
+      financingSnapshot: {
+        entradaPct: 20,
+        prazo: 48,
+      },
       createdAt: new Date().toISOString(),
     }
 

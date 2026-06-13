@@ -6,6 +6,7 @@ import {
 import useSimulatorStore from '../../store/useSimulatorStore'
 import { exportPDF } from '../../pdf/exportPDF.jsx'
 import EmptyState from '../UI/EmptyState'
+import Financing from '../Financing/Financing'
 
 // --- KPI Card ---
 function KpiCard({ label, value, sub, color = 'emerald', large = false }) {
@@ -234,6 +235,12 @@ function Executive() {
           />
         </div>
       </div>
+
+      {/* Simulação de Financiamento */}
+      <Financing
+        capexTotal={capex.totalBRL}
+        economiaMensal={savings.totalMonthly}
+      />
 
       {/* Gráfico — Curva de Carga 24h */}
       <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
