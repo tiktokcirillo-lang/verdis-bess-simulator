@@ -8,6 +8,7 @@ import { exportPDF } from '../../pdf/exportPDF.jsx'
 import EmptyState from '../UI/EmptyState'
 import Financing from '../Financing/Financing'
 import SolarProfile from '../SolarProfile/SolarProfile'
+import AnnualReport from '../AnnualReport/AnnualReport'
 
 // --- KPI Card ---
 function KpiCard({ label, value, sub, color = 'emerald', large = false }) {
@@ -318,6 +319,21 @@ function Executive() {
           <SolarProfile
             stateSigla={results.loads.state}
             systemKwp={product.powerKw * 0.25}
+          />
+        </div>
+      )}
+
+      {/* Relatório Anual */}
+      {results.loads?.state && (
+        <div>
+          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">
+            Relatório Anual de Geração e Impacto
+          </h3>
+          <AnnualReport
+            stateSigla={results.loads.state}
+            product={product}
+            savings={savings}
+            capex={capex}
           />
         </div>
       )}

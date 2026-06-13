@@ -2,6 +2,7 @@ import {
   Document, Page, Text, View, StyleSheet
 } from '@react-pdf/renderer'
 import { FINANCIAL_DEFAULTS } from '../data/database'
+import { generateAnnualReport } from '../engine/annualReport'
 
 const C = {
   bg: '#0a0e10',
@@ -183,6 +184,10 @@ function ReportDocument({ results, project }) {
   } = results
 
   const bc = badgeColors(classification.color)
+
+  const annualReport = results.loads?.state
+    ? generateAnnualReport(results.loads.state, product, savings, capex)
+    : null
 
   let cum = 0
   const cfSummary = cashFlows
@@ -427,6 +432,66 @@ function ReportDocument({ results, project }) {
             ))}
           </View>
         </View>
+
+        {annualReport && (
+          <View style={s.section}>
+            <Text style={s.sectionTitle}>Geração e Economia Mensal Estimada</Text>
+            <View style={s.table}>
+              <View style={s.tableHeader}>
+                <Text style={[s.tableCellMuted, { width: '18%', fontSize: 8 }]}>Mês</Text>
+                <Text style={[s.tableCellMuted, { width: '20%', fontSize: 8 }]}>Irrad.</Text>
+                <Text style={[s.tableCellMuted, { width: '18%', fontSize: 8 }]}>Luz solar</Text>
+                <Text style={[s.tableCellMuted, { width: '22%', fontSize: 8 }]}>Energia deslocada</Text>
+                <Text style={[s.tableCellMuted, { width: '22%', fontSize: 8 }]}>Economia</Text>
+              </View>
+              {annualReport.monthlyData.map((m, i) => (
+                <View key={i} style={[s.tableRow, i % 2 !== 0 && s.tableRowAlt]}>
+                  <Text style={[s.tableCell, { width: '18%' }]}>{m.monthName}</Text>
+                  <Text style={[s.tableCell, { width: '20%', color: '#f59e0b' }]}>
+                    {m.irradiance} kWh/m²
+                  </Text>
+                  <Text style={[s.tableCell, { width: '18%', color: C.muted }]}>
+                    {m.daylightH}h
+                  </Text>
+                  <Text style={[s.tableCell, { width: '22%', color: '#60a5fa' }]}>
+                    {m.energyShiftedKwh.toLocaleString('pt-BR')} kWh
+                  </Text>
+                  <Text style={[s.tableCellBold, { width: '22%' }]}>
+                    R$ {m.economiaMes.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}
+                  </Text>
+                </View>
+              ))}
+              <View style={[s.tableRow, { backgroundColor: '#0d1117' }]}>
+                <Text style={[s.tableCellBold, { width: '56%', color: C.muted }]}>Total anual</Text>
+                <Text style={[s.tableCellBold, { width: '22%', color: '#60a5fa' }]}>
+                  {annualReport.totalEnergyShifted.toLocaleString('pt-BR')} kWh
+                </Text>
+                <Text style={[s.tableCellBold, { width: '22%' }]}>
+                  R$ {annualReport.totalEconomiaAnual.toLocaleString('pt-BR', { minimumFractionDigits: 0 })}
+                </Text>
+              </View>
+            </View>
+          </View>
+        )}
+
+        {annualReport && (
+          <View style={s.section}>
+            <Text style={s.sectionTitle}>Impacto Ambiental Anual</Text>
+            <View style={s.kpiGrid}>
+              {[
+                { label: 'CO₂ evitado', value: `${annualReport.totalCO2Evitado} kg`, color: '#4ade80' },
+                { label: 'Árvores equivalentes', value: `${annualReport.equivalencias.arvoresPlantadas}`, color: '#4ade80' },
+                { label: 'km não rodados', value: `${annualReport.equivalencias.kmNaoRodados.toLocaleString('pt-BR')}`, color: '#4ade80' },
+                { label: 'Casas abastecidas/mês', value: `${annualReport.equivalencias.casasMes}`, color: '#4ade80' },
+              ].map((kpi, i) => (
+                <View key={i} style={s.kpiCard}>
+                  <Text style={s.kpiLabel}>{kpi.label}</Text>
+                  <Text style={[s.kpiValue, { color: kpi.color, fontSize: 14 }]}>{kpi.value}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        )}
 
         <View style={s.footer} fixed>
           <Text style={s.footerText}>Verdis BESS Simulator — Relatório Confidencial</Text>
