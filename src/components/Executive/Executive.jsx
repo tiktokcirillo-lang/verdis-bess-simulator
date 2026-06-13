@@ -4,6 +4,7 @@ import {
   ResponsiveContainer, Legend, ReferenceLine
 } from 'recharts'
 import useSimulatorStore from '../../store/useSimulatorStore'
+import { exportPDF } from '../../pdf/exportPDF'
 
 // --- KPI Card ---
 function KpiCard({ label, value, sub, color = 'emerald', large = false }) {
@@ -322,7 +323,7 @@ function Executive() {
           Comparar cenários
         </button>
         <button
-          onClick={() => alert('Export PDF — Sessão 6')}
+          onClick={() => exportPDF(results, project)}
           className="flex-[2] bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-lg transition"
         >
           Exportar PDF →

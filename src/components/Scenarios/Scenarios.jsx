@@ -1,5 +1,6 @@
 import useSimulatorStore from '../../store/useSimulatorStore'
 import { compareScenarios } from '../../engine/scenarios'
+import { exportPDF } from '../../pdf/exportPDF'
 
 // --- Badge de classificação inline ---
 function ClassBadge({ classification }) {
@@ -209,7 +210,7 @@ function ComparisonTable({ scenarios }) {
 
 // --- Componente principal ---
 function Scenarios() {
-  const { scenarios, removeScenario, setStep, results } = useSimulatorStore()
+  const { scenarios, removeScenario, setStep, results, project } = useSimulatorStore()
 
   return (
     <div className="max-w-5xl mx-auto space-y-8">
@@ -291,8 +292,9 @@ function Scenarios() {
           ← Voltar
         </button>
         <button
-          onClick={() => alert('Export PDF — Sessão 7')}
-          className="flex-[2] bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 rounded-lg transition"
+          onClick={() => results && exportPDF(results, project)}
+          disabled={!results}
+          className="flex-[2] bg-emerald-500 hover:bg-emerald-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-lg transition"
         >
           Exportar PDF →
         </button>
