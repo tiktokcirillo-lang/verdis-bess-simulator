@@ -1,4 +1,5 @@
 // Motor de interpretação — classifica e recomenda com base nos resultados financeiros
+import { getIrradiationByState } from '../data/irradiation.js'
 
 /**
  * Classifica a viabilidade do projeto em 4 níveis.
@@ -36,6 +37,22 @@ export function generateAlerts(inputs, results) {
 
   if (results.simplePayback === '>horizonte') {
     alerts.push({ type: 'error', message: 'Payback excede o horizonte de análise de ' + results.analysisYears + ' anos.' })
+  }
+
+  // Alerta contextual de irradiação (quando estado disponível)
+  if (inputs.state) {
+    const irrad = getIrradiationByState(inputs.state)
+    if (irrad >= 5.5) {
+      alerts.push({
+        type: 'info',
+        message: `${inputs.state} tem irradiação de ${irrad} kWh/m²/dia — excelente potencial para solar+BESS.`,
+      })
+    } else if (irrad < 4.5) {
+      alerts.push({
+        type: 'warning',
+        message: `${inputs.state} tem irradiação abaixo da média (${irrad} kWh/m²/dia) — avaliar viabilidade solar antes de dimensionar o BESS.`,
+      })
+    }
   }
 
   return alerts

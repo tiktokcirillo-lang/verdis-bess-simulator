@@ -53,7 +53,7 @@ function Equipment() {
       // 8. Classificação e alertas
       const classification = classifyProject(irr, payback.simplePayback)
       const alerts = generateAlerts(
-        { peakKw: loads.peakKw },
+        { peakKw: loads.peakKw, state: loads.state || '' },
         { reductionPct: demandReduction.reductionPct, irr, ...payback, analysisYears: FINANCIAL_DEFAULTS.analysisYears }
       )
 

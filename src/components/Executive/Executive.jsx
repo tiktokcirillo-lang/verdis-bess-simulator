@@ -7,6 +7,7 @@ import useSimulatorStore from '../../store/useSimulatorStore'
 import { exportPDF } from '../../pdf/exportPDF.jsx'
 import EmptyState from '../UI/EmptyState'
 import Financing from '../Financing/Financing'
+import SolarProfile from '../SolarProfile/SolarProfile'
 
 // --- KPI Card ---
 function KpiCard({ label, value, sub, color = 'emerald', large = false }) {
@@ -306,6 +307,20 @@ function Executive() {
           </AreaChart>
         </ResponsiveContainer>
       </div>
+
+      {/* Perfil Solar por Localidade */}
+      {results.loads?.state && (
+        <div>
+          <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wider mb-4">
+            Perfil Solar — {results.loads.state}
+            {results.loads.utility && ` · ${results.loads.utility}`}
+          </h3>
+          <SolarProfile
+            stateSigla={results.loads.state}
+            systemKwp={product.powerKw * 0.25}
+          />
+        </div>
+      )}
 
       {/* Descrição da classificação */}
       <div className={`
