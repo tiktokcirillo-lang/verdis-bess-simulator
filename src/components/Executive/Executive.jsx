@@ -4,7 +4,7 @@ import {
   ResponsiveContainer, Legend, ReferenceLine
 } from 'recharts'
 import useSimulatorStore from '../../store/useSimulatorStore'
-import { exportPDF } from '../../pdf/exportPDF'
+import { exportPDF } from '../../pdf/exportPDF.jsx'
 
 // --- KPI Card ---
 function KpiCard({ label, value, sub, color = 'emerald', large = false }) {

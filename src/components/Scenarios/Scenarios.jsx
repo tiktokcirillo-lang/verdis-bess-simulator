@@ -1,6 +1,6 @@
 import useSimulatorStore from '../../store/useSimulatorStore'
 import { compareScenarios } from '../../engine/scenarios'
-import { exportPDF } from '../../pdf/exportPDF'
+import { exportPDF } from '../../pdf/exportPDF.jsx'
 
 // --- Badge de classificação inline ---
 function ClassBadge({ classification }) {
