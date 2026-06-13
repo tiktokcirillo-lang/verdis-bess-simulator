@@ -5,6 +5,7 @@ import {
 } from 'recharts'
 import useSimulatorStore from '../../store/useSimulatorStore'
 import { exportPDF } from '../../pdf/exportPDF.jsx'
+import EmptyState from '../UI/EmptyState'
 
 // --- KPI Card ---
 function KpiCard({ label, value, sub, color = 'emerald', large = false }) {
@@ -75,9 +76,13 @@ function Executive() {
 
   if (!results) {
     return (
-      <div className="text-center py-20 text-gray-500">
-        Nenhuma simulação executada ainda.
-      </div>
+      <EmptyState
+        icon="📊"
+        title="Nenhuma simulação executada"
+        description="Preencha os dados do projeto, configure as cargas e selecione um equipamento BESS para ver os resultados aqui."
+        action="Iniciar simulação"
+        onAction={() => setStep(1)}
+      />
     )
   }
 
