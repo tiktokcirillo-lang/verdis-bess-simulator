@@ -19,6 +19,8 @@ const useSimulatorStore = create((set, get) => ({
     tariffOffPeak: 0.75,   // [CONFIG] padrão TARIFF_DEFAULTS
     tariffPeak: 1.45,
     tariffDemand: 35.00,
+    state: '',
+    utility: '',
   },
 
   // --- Produto BESS selecionado ---

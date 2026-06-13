@@ -72,6 +72,7 @@ function Equipment() {
         alerts,
         product: selected,
         analysisYears: FINANCIAL_DEFAULTS.analysisYears,
+        loads,
       }
 
       setSelectedProduct(selected)

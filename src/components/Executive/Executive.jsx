@@ -138,7 +138,11 @@ function Executive() {
         <div>
           <h2 className="text-2xl font-bold text-white">Painel Executivo</h2>
           <p className="text-gray-400 text-sm mt-1">
-            {project.clientName} — {project.location} — {product.label}
+            {project.clientName} — {project.location}
+            {results.loads?.utility && (
+              <span className="text-gray-600"> · {results.loads.utility}</span>
+            )}
+            {' '}— {product.label}
           </p>
         </div>
         <div className="flex items-center gap-3">
